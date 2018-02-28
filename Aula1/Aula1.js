@@ -1,3 +1,5 @@
+
+//função para ver nota final
 function notaFinal(nota1,nota2,nota3){
     return nota1 * 0.3 + nota2* 0.3 + nota3 * 0.4 ;
 }
@@ -59,7 +61,7 @@ function main(){
     }
 }
 
-
+// função de calculadora
 function main(){
     var numN1= 21;
     var numN2= 96;
@@ -78,11 +80,30 @@ function main(){
             console.log("Divisão deste numeros é --> ", numN1/numN2);
             break;
         case "elevado":
-            console.log("Potência deste numeros é --> ", numN1^numN2);
+            console.log("Potência deste numeros é --> ", Math.pow(numN1,numN2));
             break;
         
     }
 
 }
+//multiplos de 5 menores q 20
+function main(){
+    for(i=1;i<20;i++){
+        if(i%5==0){
+            console.log(i);
+        }
+    }
+}
 
-main();
+//soma de todos os numeros de 1 a 100
+
+function main(){
+    var soma=0;
+    for(i=1;i<101;i++){
+        soma+=i;
+    }
+    console.log(soma);
+}
+
+//funçao factorial de um numero
+
