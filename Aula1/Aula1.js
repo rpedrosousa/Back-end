@@ -17,6 +17,8 @@ function main(){
         console.log("Aprovado");
     }
 
+
+
 }
 //numero do mes e retorna o nome do mes
 function main(){
@@ -106,4 +108,17 @@ function main(){
 }
 
 //funçao factorial de um numero
+
+function factorial(n){
+    if (n==0 || n==1){
+        return 1;
+    }
+    else{
+        return n*factorial(n-1);
+    }
+    
+}
+console.log(factorial(5));
+
+//funçao que calcula o máximo, mínimo e a média de uma sequência de números
 
