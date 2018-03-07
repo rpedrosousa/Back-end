@@ -21,4 +21,5 @@ var imc1 = calculo(peso,altura);
     }
 }
 
-imc();
+//imc();  (TIRAR A // PARA FUNCIONAR)
+
