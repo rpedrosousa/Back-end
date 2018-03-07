@@ -118,7 +118,46 @@ function factorial(n){
     }
     
 }
-console.log(factorial(5));
+//console.log(factorial(5));
 
 //funçao que calcula o máximo, mínimo e a média de uma sequência de números
 
+function max(numG1,numG2,numG3){
+    if(numG1 > numG2 && numG1 > numG3){
+        return numG1;
+    }
+    else if(numG2 > numG1 && numG2 > numG3){
+        return numG2;
+    }
+    else{
+        return numG3;
+    }
+}
+
+function min(numG1,numG2,numG3){
+    if(numG1 < numG2 && numG1 < numG3){
+        return numG1;
+    }
+    else if(numG2 < numG1 && numG2 < numG3){
+        return numG2;
+    }
+    else{
+        return numG3;
+    }
+}
+
+function media(numG1,numG2,numG3){    
+    return (numG1+numG2+numG3)/3;
+}
+
+function seq(){
+    var numG1=2;
+    var numG2=4;
+    var numG3=6;
+    var v_min=min(numG1,numG2,numG3);
+    var v_max=max(numG1,numG2,numG3);
+    var v_media=media(numG1,numG2,numG3);
+    return ("O Maior valor é: "+v_max+"\n"+"O Menor valor é: "+v_min+"\n"+"A Média dos valores é: "+v_media);
+}
+
+console.log(seq());
