@@ -26,3 +26,12 @@ var imc1 = calculo(peso,altura);
 
 //imc();  (TIRAR A // PARA FUNCIONAR)
 
+//EX2 Escreva uma função que dada uma frase imprima a mesma frase por ordem inversa. 
+function inverso(){
+    var str="Hoje e Domingo";
+    var tamanho=str.length;
+    var res=str.chartAt(0);
+    return res;
+}
+
+console.log(inverso());
