@@ -7,10 +7,18 @@ Emitter.prototype.on=function(type,listener){
     if(this.events[type]==undefined){
         this.events[type]=[];
     }
-    this.event[type].push(listener);
+    this.events[type].push(listener);
 
 }
 
-emitr.on("greet",function(){
-    console.log()
-})
+Emitter.prototype.emit= function(type){
+    if(this.events[type] !=undefined){
+        this.events[type].forEach(function(listener){
+            listener();
+        });
+    }
+}
+
+module.exports = Emitter;
+
+//Listener e callback(funçao para indentificar o user)

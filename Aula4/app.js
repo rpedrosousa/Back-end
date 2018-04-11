@@ -16,4 +16,22 @@ var demo= JSON.parse(str);
 console.log(demo);
 
 //-----------------------------------------------------------------------------------------------------------
-//exercicio 3
+//exercicio 5
+var Emitter = require("./emitter");
+//exercicio 6
+var eventConstants = require("./constants");
+
+var emtr=new Emitter();
+
+emtr.on(eventConstants.GREET, function(){
+    console.log("Somewhere, someone said hello");
+});
+
+emtr.on(eventConstants.GREET, function(){
+    console.log("A greeting ocurred");
+});
+
+
+//Invocar todas as funcoes que forem adicionada com tipo greet
+emtr.emit(eventConstants.GREET);
+emtr.emit(eventConstants.FILESAVED);
