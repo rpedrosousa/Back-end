@@ -25,7 +25,24 @@ server.post('/addvideo',function(request,response){
     var p = request.body;
     p.id=uuidv1();
     jsonData["video"+id]=p;
-    response.send(jsonData);
+    var jsonStringify = JSON.stringify(jsonData, null, 2); 
+    fs.writeFile("./videos.json",jsonStringify, finished);
+    function finished(err){
+        response.send("Sucesso video adicionado!");
+    }
+});
+
+server.delete('/delvideo',function(request,response){
+    var del=readFile("./videos.json");
+    var jsonData= JSON.parse(del);
+    if(delete jsonData ['video' + request.body.id] != null ){
+        var jsonStringify = JSON.stringify(jsonData, null, 2); 
+        fs.writeFileSync('./videos.json',jsonStringify);
+        response.send("Sucesso video removido!");
+    }
+    else{
+        console.log("Erro!");
+    }
 });
 
 
