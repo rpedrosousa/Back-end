@@ -39,8 +39,8 @@
     "description": "WOW",
     "lenght": "",
     "url": "https://www.youtube.com/watch?v=2XHgXfmfsZU",
-    "views": "",
-    "comments": "",
+    "views": 0,
+    "comments": [],
     "tags": ""
   },
   "video5": {
@@ -50,8 +50,8 @@
     "description": "HOOHOHO",
     "lenght": "",
     "url": "https://www.youtube.com/watch?v=2XHgXfmfsZU",
-    "views": "",
-    "comments": "",
+    "views": 0,
+    "comments": [],
     "tags": ""
   }
 }

@@ -38,7 +38,6 @@ server.delete('/delvideo', function (request, response) {
     var constante = false;
     var del = readFile("./videos.json");
     var jsonData = JSON.parse(del);
-
     if (jsonData['video' + request.body.id]) {
         delete jsonData['video' + request.body.id];
         var jsonStringify = JSON.stringify(jsonData, null, 2);
@@ -115,23 +114,26 @@ server.get('/numerviz/:id', function (request, response) {
 server.get('/listordenada', function (request, response) {
     var ficheiro = readFile("./videos.json");
     var jsonData = JSON.parse(ficheiro);
-    var constante = false;
-    var num = request.body.id;
-    var views = request.body.views;
     var size = Object.keys(jsonData).length;
     var final = [];
-    var jsonStringify = JSON.stringify(jsonData, null, 2);
-    for (var i = 1, j = 2; i <= size, j <= size; i++ , j++) {
-        if (jsonData["video" + i].views >= jsonData["video" + j].views) {
-            var lista = ['O video ' + i + " têm " + jsonData["video" + i].views + " de visualizações."];
-        }
-        if (jsonData["video" + i].views < jsonData["video" + j].views) {
-            var lista = ['O video ' + j + " têm " + jsonData["video" + j].views + " de visualizações."];
-        }
-        final.push(lista);
+    var minimo;
+    var resto;
+    //Atravez de um SelectSort
+    for (var video in jsonData) {
+        final.push(video);
     }
-    // response.send(jsonStringify.sort(sortBy('views')));
-    response.send(final);
+    for (var i = 0; i < final.length; i++) {
+        minimo = i;
+        for (var j = i + 1; j < final.length; j++) {
+            if (jsonData[final[j]].views < jsonData[final[minimo]].views) {
+                minimo = j;
+            }
+        }
+        resto = jsonData[final[i]];
+        jsonData[final[i]] = jsonData[final[minimo]];
+        jsonData[final[minimo]] = resto;
+    }
+    response.send(jsonData);
 });
 
 server.listen(3000, () => console.log('Processing...'));
