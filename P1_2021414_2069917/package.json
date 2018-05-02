@@ -1,5 +1,5 @@
 {
-  "name": "p1_2021414_2069917",
+  "name": "p1_2021414",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "array-sort": "^1.0.0",
     "express": "^4.16.3",
+    "sort-by": "^1.2.0",
     "uuid": "^3.2.1"
   }
 }
