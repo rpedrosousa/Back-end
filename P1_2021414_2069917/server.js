@@ -26,7 +26,7 @@ server.post('/addvideo', function (request, response) {
     var id = ++size;
     var p = request.body;
     p.id = uuidv1();
-    jsonData["video" + id] = p;
+    jsonData["video" + p.id] = p;
     var jsonStringify = JSON.stringify(jsonData, null, 2);
     fs.writeFile("./videos.json", jsonStringify, finished);
     function finished(err) {
@@ -34,18 +34,19 @@ server.post('/addvideo', function (request, response) {
     }
 });
 
-server.delete('/delvideo', function (request, response) {
+server.delete('/delvideo/:id', function (request, response) {
     var constante = false;
     var del = readFile("./videos.json");
     var jsonData = JSON.parse(del);
-    if (jsonData['video' + request.body.id]) {
-        delete jsonData['video' + request.body.id];
+    id = request.params.id;
+    if (jsonData['video' + id]) {
+        delete jsonData['video' + id];
         var jsonStringify = JSON.stringify(jsonData, null, 2);
         fs.writeFileSync('./videos.json', jsonStringify);
         response.send("Sucesso video removido!");
     }
     else {
-        response.send("Erro!");
+        response.send("ERRO!");
     }
 });
 
@@ -78,35 +79,34 @@ server.get('/selallvideo/:uploader', function (request, response) {
     }
 });
 
-server.post('/addcomment/:id', function (request, response) {
+server.post('/addcomment/', function (request, response) {
     var add = readFile("./videos.json");
     var jsonData = JSON.parse(add);
-    var comment = request.params.id;
-    var comentar = request.body.comments;
+    var comment = request.body;
     var size = Object.keys(jsonData).length;
-    for (var i = 1; i <= size; i++) {
-        if (jsonData["video" + i].id == comment) {
-            jsonData["video" + i].comments.push(comentar);
+    for (var x in jsonData) {
+        if (x == 'video' + comment.id) {
+            jsonData[x].comments.push(comment.comments);
         }
     }
-    var jsonStringify = JSON.stringify(jsonData, null, 2);
+    var jsonStringify = JSON.stringify(jsonData);
     fs.writeFile("./videos.json", jsonStringify);
-    response.send("Foi adicionado comentário com sucesso : " + jsonData["video" + comment].comments);
+    response.send("Foi adicionado comentário com sucesso" + " " + jsonData['video' + comment.id].comments);
 });
 
 server.get('/numerviz/:id', function (request, response) {
     var file = readFile("./videos.json");
     var jsonData = JSON.parse(file);
     var numero = request.params.id;
-    var visao = request.body.views;
+    var visao = request.body;
     var size = Object.keys(jsonData).length;
-    for (var i = 1; i <= size; i++) {
-        if (jsonData["video" + i].id == numero) {
-            jsonData["video" + i].views++;
+    for (var x in jsonData) {
+        if (x == 'video' + numero) {
+            jsonData[x].views++;
         }
     }
-    var numerototal = ['Foi adicionado uma visualização para o video: ' + numero + ', Numero total de visualizações é: ' + jsonData["video" + numero].views];
-    var jsonStringify = JSON.stringify(jsonData, null, 2);
+    var numerototal = ['Foi adicionado uma visualização para o video: ' + ' ' + numero + ' ' + ', Numero total de visualizações é: ' + jsonData['video' + numero].views];
+    var jsonStringify = JSON.stringify(jsonData);
     fs.writeFile("./videos.json", jsonStringify);
     response.send(numerototal);
 });
@@ -115,25 +115,40 @@ server.get('/listordenada', function (request, response) {
     var ficheiro = readFile("./videos.json");
     var jsonData = JSON.parse(ficheiro);
     var size = Object.keys(jsonData).length;
+    var receber = request.params.views;
     var final = [];
-    var minimo;
-    var resto;
-    //Atravez de um SelectSort
     for (var video in jsonData) {
-        final.push(video);
-    }
-    for (var i = 0; i < final.length; i++) {
-        minimo = i;
-        for (var j = i + 1; j < final.length; j++) {
-            if (jsonData[final[j]].views < jsonData[final[minimo]].views) {
-                minimo = j;
+        if (jsonData.hasOwnProperty(video)) {
+            if (jsonData.video == receber) {
+                final.push(jsonData[video]);
             }
         }
-        resto = jsonData[final[i]];
-        jsonData[final[i]] = jsonData[final[minimo]];
-        jsonData[final[minimo]] = resto;
     }
-    response.send(jsonData);
+    final.sort(function (a, b) {
+        return a.views - b.views;
+    });
+    response.send(final);
 });
+
+
+// var final = [];
+// var minimo;
+// var resto;
+// //Atravez de um SelectSort
+// for (var video in jsonData) {
+//     final.push(video);
+// }
+// for (var i = 0; i < final.length; i++) {
+//     minimo = i;
+//     for (var j = i + 1; j < final.length; j++) {
+//         if (jsonData[final[j]].views < jsonData[final[minimo]].views) {
+//             minimo = j;
+//         }
+//     }
+//     resto = jsonData[final[i]];
+//     jsonData[final[i]] = jsonData[final[minimo]];
+//     jsonData[final[minimo]] = resto;
+// }
+// response.send(jsonData);
 
 server.listen(3000, () => console.log('Processing...'));
