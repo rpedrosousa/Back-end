@@ -2,8 +2,6 @@ const express = require('express');
 const server = express();
 const fs = require('fs');
 const bodyParser = require('body-parser');
-var arraySort = require('array-sort');
-var sortBy = require('sort-by');
 const uuidv1 = require('uuid/v1');
 
 server.use(bodyParser.json());
