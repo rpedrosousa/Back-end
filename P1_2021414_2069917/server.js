@@ -7,15 +7,19 @@ const uuidv1 = require('uuid/v1');
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 
+//-----------------------FUNÇÃO QUE LÊ FICHEIROS-----------------------//
 function readFile(fileName) {
     var ler = fs.readFileSync(fileName, 'utf-8');
     return ler;
 }
 
+//-----------------------LISTAR TODOS OS VIDEOS QUE ESTAO NO VIDEOS.JSON-----------------------//
 server.get('/listvideo', function (request, response) {
     var video = readFile("./videos.json");
     response.send(video);
 });
+
+//-----------------------ADICIONAR VIDEOS AO VIDEOS.JSON A PARTIR DO BODY DO POSTMAN-----------------------//
 
 server.post('/addvideo', function (request, response) {
     var file = readFile("./videos.json");
@@ -32,6 +36,7 @@ server.post('/addvideo', function (request, response) {
     }
 });
 
+//-----------------------APAGAR VIDEOS DO VIDEOS.JSON A PARTIR DO ID E SE ERRAR DEVOLVE ERRO-----------------------//
 server.delete('/delvideo/:id', function (request, response) {
     var constante = false;
     var del = readFile("./videos.json");
@@ -48,6 +53,7 @@ server.delete('/delvideo/:id', function (request, response) {
     }
 });
 
+//-----------------------SELECIONAR VIDEO DO VIDEOS.JSON A PARTIR DO ID-----------------------//
 server.get('/selvideo/:id', function (request, response) {
     var select = readFile("./videos.json");
     var jsonData = JSON.parse(select);
@@ -55,7 +61,7 @@ server.get('/selvideo/:id', function (request, response) {
     response.send(video);
 });
 
-
+//-----------------------SELECIONAR TODOS OS VIDEOS DO VIDEOS.JSON A PARTIR DO UPLOADER (POR EXEMPLO)-----------------------//
 server.get('/selallvideo/:uploader', function (request, response) {
     var constante = false;
     var f = readFile("./videos.json");
@@ -77,6 +83,7 @@ server.get('/selallvideo/:uploader', function (request, response) {
     }
 });
 
+//-----------------------ADICIONAR COMENTARIOS AO VIDEOS.JSON ATRAVES DO ID (POR EXEMPLO)-----------------------//
 server.post('/addcomment/', function (request, response) {
     var add = readFile("./videos.json");
     var jsonData = JSON.parse(add);
@@ -92,6 +99,7 @@ server.post('/addcomment/', function (request, response) {
     response.send("Foi adicionado comentário com sucesso" + " " + jsonData['video' + comment.id].comments);
 });
 
+//-----------------------MOSTRAR O NUMERO DE VISUALIZAÇÕES DOS VIDEOS DO VIDEOS.JSON ATRAVEZ DO ID E ACTUALIZA-SE-----------------------//
 server.get('/numerviz/:id', function (request, response) {
     var file = readFile("./videos.json");
     var jsonData = JSON.parse(file);
@@ -109,6 +117,7 @@ server.get('/numerviz/:id', function (request, response) {
     response.send(numerototal);
 });
 
+//-----------------------MOSTRAR A LISTA ORDENADA DE VIDEOS DO VIDEOS.JSON A PARTIR DO NUMERO DE VISUALIZAÇÕES (POR EXEMPLO)-----------------------//
 server.get('/listordenada', function (request, response) {
     var ficheiro = readFile("./videos.json");
     var jsonData = JSON.parse(ficheiro);
@@ -123,11 +132,10 @@ server.get('/listordenada', function (request, response) {
         }
     }
     final.sort(function (a, b) {
-        return a.views - b.views;
+        return a.comments.length - b.comments.length;
     });
     response.send(final);
 });
-
 
 // var final = [];
 // var minimo;
